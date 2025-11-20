@@ -15,13 +15,31 @@ from PyQt5.QtGui import QFont, QColor, QPalette, QIcon, QPixmap
 
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from api.riot_client import RiotAPIClient
-from data.champion_data import ChampionDatabase, ItemDatabase
-from analysis.replay_analyzer import ReplayAnalyzer
-from ai.decision_engine import DecisionEngine
-from gui.styles import *
+# 프로젝트 루트 경로를 sys.path에 추가
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(current_dir))
+src_dir = os.path.join(project_root, 'src')
+
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+if src_dir not in sys.path:
+    sys.path.insert(0, src_dir)
+
+# 이제 import 가능
+try:
+    from src.api.riot_client import RiotAPIClient
+    from src.data.champion_data import ChampionDatabase, ItemDatabase
+    from src.analysis.replay_analyzer import ReplayAnalyzer
+    from src.ai.decision_engine import DecisionEngine
+    from src.gui.styles import *
+except ImportError:
+    # 다른 경로에서도 시도
+    from api.riot_client import RiotAPIClient
+    from data.champion_data import ChampionDatabase, ItemDatabase
+    from analysis.replay_analyzer import ReplayAnalyzer
+    from ai.decision_engine import DecisionEngine
+    from gui.styles import *
 
 
 class AnimatedButton(QPushButton):
