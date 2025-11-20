@@ -62,14 +62,24 @@ cp .env.example .env
 
 ### 실행
 
+**방법 1: EXE 파일 (Windows)**
+```bash
+# EXE 파일 빌드
+build_exe.bat
+
+# 실행
+dist\LOL_AI_Assistant.exe
+```
+
+**방법 2: Python 스크립트**
 ```bash
 python main.py
 ```
 
-또는 GUI를 직접 실행:
-
+**방법 3: 설치 프로그램**
 ```bash
-python -m src.gui.main_window
+# Inno Setup으로 설치 프로그램 생성
+# installer.iss 파일을 Inno Setup Compiler로 컴파일
 ```
 
 ## 📖 사용 방법
@@ -112,36 +122,46 @@ python -m src.gui.main_window
 
 ```
 lol-ai-assistant/
-├── main.py                 # 메인 실행 파일
-├── requirements.txt        # Python 의존성
-├── .env.example           # 환경 변수 예시
-├── README.md              # 프로젝트 문서
+├── main.py                      # 메인 실행 파일
+├── requirements.txt             # Python 의존성
+├── requirements-build.txt       # 빌드용 의존성
+├── .env.example                # 환경 변수 예시
+├── README.md                   # 프로젝트 문서
+├── USAGE.md                    # 사용 가이드
+├── BUILD_GUIDE.md              # 빌드 가이드
 │
-├── src/                   # 소스 코드
-│   ├── api/              # Riot API 클라이언트
+├── build_exe.py                # EXE 빌드 스크립트
+├── build_exe.bat               # Windows 빌드 스크립트
+├── build_exe.sh                # Linux/Mac 빌드 스크립트
+├── installer.iss               # Inno Setup 설치 스크립트
+│
+├── src/                        # 소스 코드
+│   ├── api/                   # Riot API 클라이언트
 │   │   └── riot_client.py
 │   │
-│   ├── data/             # 데이터 관리
+│   ├── data/                  # 데이터 관리
 │   │   └── champion_data.py
 │   │
-│   ├── analysis/         # 리플레이 분석
+│   ├── analysis/              # 리플레이 분석
 │   │   └── replay_analyzer.py
 │   │
-│   ├── ai/               # AI 의사결정
+│   ├── ai/                    # AI 의사결정
 │   │   └── decision_engine.py
 │   │
-│   ├── gui/              # GUI 인터페이스
-│   │   └── main_window.py
+│   ├── gui/                   # GUI 인터페이스
+│   │   ├── main_window.py    # 기본 GUI
+│   │   ├── modern_window.py  # 모던 게이밍 GUI ⭐
+│   │   └── styles.py         # 스타일시트
 │   │
-│   └── utils/            # 유틸리티
+│   └── utils/                 # 유틸리티
 │       └── logger.py
 │
-├── data/                  # 데이터 저장
-│   ├── champions/        # 챔피언 데이터
-│   ├── replays/          # 리플레이 데이터
-│   └── models/           # AI 모델
+├── data/                       # 데이터 저장
+│   ├── champions/             # 챔피언 데이터
+│   ├── replays/               # 리플레이 데이터
+│   └── models/                # AI 모델
 │
-└── tests/                # 테스트 코드
+└── tests/                     # 테스트 코드
 ```
 
 ## 🧠 AI 시스템 작동 원리
@@ -265,6 +285,44 @@ LOG_LEVEL=INFO
 - GitHub Issues 생성
 - 이메일: support@lol-ai-assistant.com
 
+## 💻 데스크톱 앱 기능
+
+### 🎨 모던 게이밍 UI
+- LOL 스타일의 골드 & 다크 테마
+- 애니메이션 효과가 있는 버튼
+- 반응형 레이아웃
+- 5개의 탭 인터페이스:
+  - 🏠 **대시보드**: 시스템 개요 및 빠른 액션
+  - 📊 **리플레이 분석**: 소환사 게임 분석
+  - ⚔️ **챔피언 정보**: 스킬, 상성, 빌드
+  - 🎯 **실시간 조언**: AI 기반 전략 추천
+  - ⚙️ **설정**: API 키 및 정보
+
+### 📦 배포 형식
+- **.exe 파일**: 단일 실행 파일 (PyInstaller)
+- **설치 프로그램**: Inno Setup 기반 인스톨러
+- **휴대용 버전**: 설치 없이 실행 가능
+
+## 🔨 EXE 파일 빌드
+
+### 빠른 빌드
+```bash
+# Windows
+build_exe.bat
+
+# Linux/Mac
+chmod +x build_exe.sh
+./build_exe.sh
+```
+
+### 설치 프로그램 생성
+1. EXE 파일 먼저 빌드
+2. [Inno Setup](https://jrsoftware.org/isdl.php) 설치
+3. `installer.iss` 파일을 Inno Setup Compiler로 열기
+4. Build → Compile 클릭
+
+자세한 내용은 [BUILD_GUIDE.md](BUILD_GUIDE.md)를 참고하세요.
+
 ## 🔄 업데이트 로그
 
 ### v1.0.0 (2024-01-20)
@@ -273,7 +331,8 @@ LOG_LEVEL=INFO
 - 🎯 실시간 조언 시스템
 - ⚔️ 챔피언 데이터베이스
 - 📊 통계 분석 도구
-- 🖥️ GUI 데스크톱 애플리케이션
+- 🖥️ 모던 게이밍 GUI 데스크톱 애플리케이션
+- 📦 EXE 파일 및 설치 프로그램 지원
 
 ---
 
