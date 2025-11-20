@@ -1,0 +1,11 @@
+# LOL AI Assistant - 빌드용 의존성
+
+# 기본 의존성
+requests==2.31.0
+python-dotenv==1.0.0
+
+# GUI
+PyQt5==5.15.10
+
+# 빌드 도구
+pyinstaller==6.3.0
