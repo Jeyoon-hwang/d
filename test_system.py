@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-간단한 테스트 실행 파일
-문제 진단용
+LOL AI Assistant - 시스템 체크 도구
+문제 진단 및 환경 확인
 """
 
 print("=" * 60)
@@ -42,7 +43,8 @@ required_paths = [
     'src/api',
     'src/data',
     'src/ai',
-    'src/gui/modern_window.py'
+    'src/gui/modern_window.py',
+    'main.py'
 ]
 
 for path in required_paths:
@@ -60,7 +62,10 @@ if all_ok:
 else:
     print("✗ 문제 발견!")
     print("\n해결 방법:")
-    print("  pip install PyQt5 requests python-dotenv")
+    if not all_ok:
+        print("1. 필요한 패키지 설치:")
+        print("   pip install PyQt5 requests python-dotenv")
+        print("\n2. 프로젝트 파일이 없다면 다시 다운로드하세요")
 
 print("=" * 60)
 input("\nEnter를 눌러 종료...")
