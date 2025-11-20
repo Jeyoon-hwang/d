@@ -1,54 +1,63 @@
-"""
-LOL AI Assistant EXE 빌드 스크립트
-PyInstaller를 사용하여 Windows 실행 파일을 생성합니다.
-"""
+# Simple EXE Build Script
+# Run this file to build LOL_AI_Assistant.exe
 
-import PyInstaller.__main__
-import os
 import sys
+import subprocess
+import os
 
-# 프로젝트 루트 경로
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+def main():
+    print("=" * 60)
+    print("LOL AI Assistant - EXE Builder")
+    print("=" * 60)
+    print()
 
-# 빌드 옵션
-PyInstaller.__main__.run([
-    'src/gui/modern_window.py',  # 메인 스크립트
+    # Check if PyInstaller is installed
+    try:
+        import PyInstaller
+        print("✓ PyInstaller found")
+    except ImportError:
+        print("Installing PyInstaller...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "pyinstaller"])
+        print("✓ PyInstaller installed")
 
-    # 출력 설정
-    '--name=LOL_AI_Assistant',
-    '--onefile',  # 단일 EXE 파일
-    '--windowed',  # GUI 앱 (콘솔 숨김)
+    # Build command
+    cmd = [
+        sys.executable, "-m", "PyInstaller",
+        "--name=LOL_AI_Assistant",
+        "--onefile",
+        "--windowed",
+        "--add-data=src;src",
+        "--hidden-import=PyQt5",
+        "--hidden-import=requests",
+        "--hidden-import=dotenv",
+        "--clean",
+        "--noconfirm",
+        "src/gui/modern_window.py"
+    ]
 
-    # 아이콘 (있을 경우)
-    # '--icon=resources/icon.ico',
+    print()
+    print("Building EXE file...")
+    print()
 
-    # 추가 데이터 파일
-    '--add-data=src;src',
+    try:
+        subprocess.check_call(cmd)
+        print()
+        print("=" * 60)
+        print("✓ Build SUCCESS!")
+        print("=" * 60)
+        print()
+        print(f"EXE location: {os.path.join(os.getcwd(), 'dist', 'LOL_AI_Assistant.exe')}")
+        print()
+        print("You can now run: dist\\LOL_AI_Assistant.exe")
 
-    # 숨김 imports
-    '--hidden-import=PyQt5',
-    '--hidden-import=requests',
-    '--hidden-import=dotenv',
+    except subprocess.CalledProcessError as e:
+        print()
+        print("=" * 60)
+        print("✗ Build FAILED!")
+        print("=" * 60)
+        print()
+        print(f"Error: {e}")
+        sys.exit(1)
 
-    # 출력 디렉토리
-    '--distpath=dist',
-    '--workpath=build',
-    '--specpath=.',
-
-    # 최적화
-    '--clean',
-    '--noconfirm',
-
-    # 디버그 정보
-    # '--debug=all',  # 문제 발생 시 활성화
-])
-
-print("\n" + "="*60)
-print("✓ EXE 파일 빌드 완료!")
-print("="*60)
-print(f"\n실행 파일 위치: {os.path.join(ROOT_DIR, 'dist', 'LOL_AI_Assistant.exe')}")
-print("\n사용 방법:")
-print("1. dist/LOL_AI_Assistant.exe 파일을 실행하세요")
-print("2. Riot API 키를 설정하세요")
-print("3. 소환사를 분석하거나 실시간 조언을 받으세요!")
-print("\n" + "="*60)
+if __name__ == "__main__":
+    main()
